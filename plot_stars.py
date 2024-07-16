@@ -18,15 +18,17 @@ def plot_field(coord, cat, wcs):
     Function to plot field
     """
 
-    fig = plt.figure(figsize=(8, 8))
+    fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111, projection=wcs)
 
-    ax.scatter(cat['RAJ2000'], cat['DEJ2000'], s=20, edgecolor='k', facecolor='none')
+    ax.scatter(cat['RAJ2000'], cat['DEJ2000'], s=50, marker='*', color='k')
     ax.scatter(coord.ra.deg, coord.dec.deg, s=100, edgecolor='r', facecolor='none')
     ax.scatter(coord.ra.deg, coord.dec.deg, s=100, marker='+', color='r')
 
     ax.set_xlabel('Right Ascension')
     ax.set_ylabel('Declination')
+
+    plt.tight_layout()
     plt.show()
 
 def plot_random_field(size=(1000, 1000)):
