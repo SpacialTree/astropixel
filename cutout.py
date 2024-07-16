@@ -31,3 +31,4 @@ def get_cutout_hdu(hdu, position, l, w):
     size = (l, w)
     cutout = Cutout2D(data, position=position, size=size, wcs=ww)
     return cutout
+
