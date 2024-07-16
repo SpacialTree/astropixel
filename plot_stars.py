@@ -29,7 +29,7 @@ def plot_field(coord, cat, wcs):
     ax.set_ylabel('Declination')
     plt.show()
 
-def plot_random_field():
+def plot_random_field(size=(1000, 1000)):
     """
     Function to plot random field
     """
@@ -40,7 +40,7 @@ def plot_random_field():
     i = 0
     while len(cat) < 10:
         coord = catalog_querry.get_random_coordinates()
-        wcs = get_wcs(coord)
+        wcs = get_wcs(coord, size=size)
         cat = catalog_querry.get_2mass_catalog(coord, 1*u.arcmin) 
         i += 1
         if i > 25:
