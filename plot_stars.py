@@ -7,7 +7,7 @@ from astropy.wcs import WCS
 import make_star
 
 
-def get_wcs(coord, scale=1*u.arcmin, size=(1000, 1000)):
+def get_wcs(coord, scale=2*u.arcmin, size=(1000, 1000)):
     """ 
     Function to get WCS
     """
@@ -85,10 +85,37 @@ def scale_the_magnitude(magnitude, scale=5):
 
     return lum**(1/scale)
 
+def plot_starfield(coord, size=(1000, 1000), ax=None):
+    """
+    Function to plot star field
+    """
+    radius = 1*u.arcmin
+    wcs = get_wcs(coord, scale=radius*2, size=size)
+    cat = catalog_querry.get_2mass_catalog(coord, radius)
+    star = make_star.GaussianCrossPSF(amplitude=1)
+
+    psf = np.zeros((size[0], size[1]))
+    for c in cat:
+        coordi = SkyCoord(c['RAJ2000'], c['DEJ2000'], unit=(u.deg, u.deg), frame='icrs')
+        pix_cord = coordi.to_pixel(wcs)
+        std = scale_the_magnitude(c['Kmag'], scale=5)*5
+        psf += star.generate_cross_psf(np.round(pix_cord[0]), np.round(pix_cord[1])+1, std, 0.5, grid_size=size[0])
+
+    if ax is None:
+        fig = plt.figure(figsize=(10, 8))
+        ax = fig.add_subplot(111, projection=wcs)
+
+    ax.imshow(psf, origin='lower', cmap='gray', aspect='equal')
+    ax.set_xlabel('Right Ascension')
+    ax.set_ylabel('Declination')
+
+    plt.tight_layout()
+    return ax
+
 def example_plot():
     coord = SkyCoord.from_name('Barnard\'s Star')
     frame = np.zeros((1000, 1000))
-    ww = get_wcs(coord, frame.shape)
+    ww = get_wcs(coord, size=frame.shape)
     cat = catalog_querry.get_2mass_catalog(coord, 1*u.arcmin)
     star = make_star.GaussianCrossPSF(amplitude=1)
 
