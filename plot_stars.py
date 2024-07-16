@@ -4,16 +4,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import catalog_querry
 from astropy.wcs import WCS
+import make_star
 
 
-def get_wcs(coord, size=(1000, 1000)):
+def get_wcs(coord, scale=1*u.arcmin, size=(1000, 1000)):
     """ 
     Function to get WCS
     """
     wcs = WCS(naxis=2)
     wcs.wcs.crpix = [size[0]/2, size[1]/2]  # Set the reference pixel to the center of the image
     wcs.wcs.crval = [coord.ra.deg, coord.dec.deg]  # Set the reference value to the given coordinates
-    wcs.wcs.cdelt = np.array([-0.00005, 0.00005])  # Set the pixel scale (assuming 0.00001 degrees per pixel)
+    wcs.wcs.cdelt = np.array([-scale.to(u.deg).value/size[0], scale.to(u.deg).value/size[1]])  # Set the pixel scale (assuming 0.00001 degrees per pixel)
     wcs.wcs.ctype = ["RA---TAN", "DEC--TAN"]  # Set the coordinate type to RA/DEC
 
     return wcs
@@ -69,6 +70,41 @@ def plot_random_field(size=(1000, 1000), ax=None):
             break
 
     plot_field(coord, cat, wcs, ax=ax)
+
+def magnitude_to_luminosity(magnitude):
+    # Convert magnitude to flux
+    flux = 10**(-0.4 * magnitude)
+    
+    # Convert flux to luminosity
+    luminosity = 4 * np.pi * (10)**2 * flux
+    
+    return luminosity
+
+def scale_the_magnitude(magnitude, scale=5):
+    lum = magnitude_to_luminosity(magnitude)
+
+    return lum**(1/scale)
+
+def example_plot():
+    coord = SkyCoord.from_name('Barnard\'s Star')
+    frame = np.zeros((1000, 1000))
+    ww = get_wcs(coord, frame.shape)
+    cat = catalog_querry.get_2mass_catalog(coord, 1*u.arcmin)
+    star = make_star.GaussianCrossPSF(amplitude=1)
+
+    psf = np.zeros((1000, 1000))
+    for c in cat:
+        coordi = SkyCoord(c['RAJ2000'], c['DEJ2000'], unit=(u.deg, u.deg), frame='icrs')
+        pix_cord = coordi.to_pixel(ww)
+        std = scale_the_magnitude(c['Kmag'], scale=5)*50
+        psf += star.generate_cross_psf(np.round(pix_cord[0]), np.round(pix_cord[1])+1, std, 0.5, grid_size=1000)
+
+    fig = plt.figure(figsize=(10, 8))
+    ax = plt.subplot(111, projection=ww)
+    ax.imshow(psf, origin='lower', cmap='gray', aspect='equal')
+    ax.set_xlabel('Right Ascension')
+    ax.set_ylabel('Declination')
+    plt.show()
 
 def main():
     plot_random_field()
