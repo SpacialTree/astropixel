@@ -2,7 +2,7 @@ from astropy import units as u
 from astropy.coordinates import SkyCoord
 import numpy as np
 import matplotlib.pyplot as plt
-from catalog_querry import get_random_coordinates
+import catalog_querry
 from astropy.wcs import WCS
 
 
@@ -18,11 +18,14 @@ def plot_random_field():
     Function to plot random field
     """
 
-    coord = get_random_coordinates()
+    coord = catalog_querry.get_random_coordinates()
     wcs = get_wcs(coord)
+    cat = catalog_querry.get_2mass_catalog(coord, 1*u.arcmin)
 
     fig = plt.figure(figsize=(8, 8))
-    ax = fig.add_subplot(111, projection=wcs)
+    ax = fig.add_subplot(111, projection=wcs.celestial)
+
+    ax.scatter(cat['RAJ2000'], cat['DEJ2000'], s=20, edgecolor='k', facecolor='none')
 
     ax.set_xlabel('RA')
     ax.set_ylabel('Dec')
