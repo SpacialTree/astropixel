@@ -10,6 +10,7 @@ Welcome to AstroPixel's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   catalog_querry.rst
 
 
 Indices and tables
