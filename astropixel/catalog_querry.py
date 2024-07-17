@@ -1,32 +1,45 @@
 from astropy import units as u
 from astropy.coordinates import SkyCoord
-from astroquery.sdss import SDSS
+from astroquery.vizier import Vizier
 import numpy as np
 import matplotlib.pyplot as plt
 
-def get_sdss_catalog_circ(ra, dec, radius=1.0*u.deg):
-    """
-    Function to get the SDSS catalog around a given RA and DEC
-    """
-    # create a SkyCoord object
-    c = SkyCoord(ra=ra, dec=dec, unit=(u.deg, u.deg), frame='icrs')
-    # query the SDSS catalog
-    xid = SDSS.query_region(c, radius=radius)
+def get_2mass_catalog(coord, radius=1.0*u.arcmin):
+    """ Query 2MASS Catalog
+    
+    Function to get 2MASS catalog at a given coordinate and radius using Vizier.
 
-def get_sdss_catalog_rect(ra, dec, width=1.0*u.deg, height=1.0*u.deg):
+    Args:
+        coord (SkyCoord): Coordinates of the center of the search.
+        radius (Quantity): Radius of the search.
+
+    Returns:
+        Table: Table of the 2MASS catalog.
+
     """
-    Function to get the SDSS catalog around a given RA and DEC
-    """
-    # create a SkyCoord object
-    c = SkyCoord(ra=ra, dec=dec, unit=(u.deg, u.deg), frame='icrs')
-    # query the SDSS catalog
-    xid = SDSS.query_region(c, width=width, height=height)
+    guide = Vizier(catalog="II/246").query_region(coord, radius=radius)[0]
+    return guide
 
 def get_random_coordinates():
-    """
-    Function to generate random coordinates
+    """ Get Random Coordinates
+
+    Function to generate a random SkyCoord object.
+
+    Returns:
+        SkyCoord: Random SkyCoord object.
     """
     ra = np.random.uniform(0, 360)
     dec = np.random.uniform(-90, 90)
-    return ra, dec
+    return SkyCoord(ra=ra, dec=dec, unit=(u.deg, u.deg), frame='icrs')
 
+def get_random_coordinates_gal():
+    """ Get Random Coordinates in Galactic Coordinates
+
+        Function to generate a random SkyCoord object in Galactic coordinates within -5 < b < 5.
+
+        Returns:
+            SkyCoord: Random SkyCoord object in Galactic coordinates within -5 < b < 5.
+    """
+    l = np.random.uniform(0, 360)
+    b = np.random.uniform(-5, 5)
+    return SkyCoord(l=l, b=b, unit=(u.deg, u.deg), frame='galactic')
