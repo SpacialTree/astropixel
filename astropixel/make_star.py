@@ -5,9 +5,23 @@ class GaussianCrossPSF:
     def __init__(self, amplitude=1):
         self.amplitude = amplitude
 
-    def generate_cross_psf(self, x_center, y_center, stddev, background_factor, grid_size=100):
-        x = np.linspace(0, grid_size-1, grid_size)
-        y = np.linspace(0, grid_size-1, grid_size)
+    def generate_cross_psf(self, x_center, y_center, stddev, background_factor, size=(300, 200)):
+        """Generate Stars using Gaussian
+
+        Function to generate a star-like pixel art using gaussian function and masking.
+
+        Args:
+            x_center (float): x coordinate of the center of the star
+            y_center (float): y coordinate of the center of the star
+            stddev (float): Standard deviation of the Gaussian function to control the size
+            background_factor (float): A number from 0 to 1 to tune the masking
+            grid_size_x (float): Size of X axis
+            grid_size_y (float): Size of Y axis
+
+        
+        """
+        x = np.linspace(0, size[0]-1, size[1])
+        y = np.linspace(0, size[0]-1, size[1])
         x, y = np.meshgrid(x, y)
         
         # Calculate the Gaussian
@@ -28,24 +42,25 @@ class GaussianCrossPSF:
         
         return psf_cross
 
-    def plot_multiple_cross_psfs(self, centers_stddevs, grid_size=100):
-        combined_psf = np.zeros((grid_size, grid_size))
+    def plot_multiple_cross_psfs(self, centers_stddevs, size=(300, 200)):
+        combined_psf = np.zeros((size[0], size[1]))
         
         for (x_center, y_center, stddev, background_factor) in centers_stddevs:
-            psf_cross = self.generate_cross_psf(x_center, y_center, stddev, background_factor, grid_size)
+            psf_cross = self.generate_cross_psf(x_center, y_center, stddev, background_factor, size=size)
             combined_psf += psf_cross
         
         plt.figure(figsize=(6, 6))
-        plt.imshow(combined_psf, extent=(0, grid_size-1, 0, grid_size-1), origin='lower')
+        plt.imshow(combined_psf, extent=(0, size[0]-1, 0, size[1]-1), origin='lower')
         plt.colorbar()
         plt.xlabel('X')
         plt.ylabel('Y')
         plt.show()
 
+# Example:
 def main():
     psf = GaussianCrossPSF(amplitude=1)
-    centers_stddevs = [(5, 5, 2.5, 0.5), (10, 20, 3, 0.4), (25, 10, 5, 0.4)]
-    psf.plot_multiple_cross_psfs(centers_stddevs, grid_size=30)
+    centers_stddevs = [(5.6, 5, 2.5, 0.5), (10, 20, 3, 0.4), (25, 10, 5, 0.4)]
+    psf.plot_multiple_cross_psfs(centers_stddevs, size=(100, 67))
 
 if __name__ == '__main__':
     main()
