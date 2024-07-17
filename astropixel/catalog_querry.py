@@ -5,8 +5,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def get_2mass_catalog(coord, radius=1.0*u.arcmin):
-    """
-    Function to get 2MASS catalog
+    """ Query 2MASS Catalog
+    
+    Function to get 2MASS catalog at a given coordinate and radius using Vizier.
+
+    Args:
+        coord (SkyCoord): Coordinates of the center of the search.
+        radius (Quantity): Radius of the search.
+
+    Returns:
+        Table: Table of the 2MASS catalog.
+
     """
     guide = Vizier(catalog="II/246").query_region(coord, radius=radius)[0]
     return guide
