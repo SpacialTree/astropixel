@@ -16,7 +16,7 @@ class StarPlotter:
     Class to plot stars
     """
 
-    def __init__(self, coord, size=(1000, 1000), radius=1*u.arcmin):
+    def __init__(self, coord, size=(1000, 1000), radius=1*u.arcmin, catalog_name='2MASS'):
         """ 
         Initialize the class
 
@@ -32,9 +32,31 @@ class StarPlotter:
         self.size_scale = size[0]/10
         self.radius = radius
         self.scale = radius*2
-        self.cat = catalog_querry.get_2mass_catalog(coord, radius)
+        self.catalog_name = catalog_name
+        self.set_catalog()
         self.wcs = self.get_wcs()
         self.crosshair = False
+    
+    def set_catalog(self, catalog_name=self.catalog_name):
+        """ 
+        Function to get catalog
+
+        Returns:
+            Table: Table of stars.
+        """
+        self.catalog_name = catalog_name
+
+        if catalog_name == '2MASS':
+            self.cat = catalog_querry.get_2mass_catalog(self.coord, self.radius)
+            self.R = 'Kmag'
+            self.G = 'Hmag'
+            self.B = 'Jmag'
+        else:
+            print("No catalog found. Setting 2MASS catalog.")
+            self.cat = catalog_querry.get_2mass_catalog(self.coord, self.radius)
+            self.R = 'Kmag'
+            self.G = 'Hmag'
+            self.B = 'Jmag'
     
     def get_wcs(self):
         """ 
@@ -95,7 +117,7 @@ class StarPlotter:
         plt.tight_layout()
         return ax
 
-    def get_cross_psf_field_image(self, band='Kmag'):
+    def get_cross_psf_field_image(self, band=self.R):
         """
         Function to get cross PSF field image
 
@@ -131,7 +153,7 @@ class StarPlotter:
             fig = plt.figure(figsize=(10, 8))
             ax = fig.add_subplot(111, projection=self.wcs)
 
-        psf = self.get_cross_psf_field_image(band='Kmag')
+        psf = self.get_cross_psf_field_image(band=self.R)
 
         ax.imshow(psf, origin='lower', cmap='gray', aspect='equal')
         if labels:
@@ -161,9 +183,9 @@ class StarPlotter:
             ax = fig.add_subplot(111, projection=self.wcs)
 
         #psf = self.get_cross_psf_field_image(band='Kmag')
-        psf_R = self.get_cross_psf_field_image(band='Kmag')
-        psf_G = self.get_cross_psf_field_image(band='Hmag')
-        psf_B = self.get_cross_psf_field_image(band='Jmag')
+        psf_R = self.get_cross_psf_field_image(band=self.R)
+        psf_G = self.get_cross_psf_field_image(band=self.G)
+        psf_B = self.get_cross_psf_field_image(band=self.B)
         
         rgb = make_rgb_scaled_image(psf_R, psf_G, psf_B)
 
@@ -257,19 +279,6 @@ def scale_the_magnitude(magnitude, scale=5):
     lum = magnitude_to_luminosity(magnitude)
 
     return lum**(1/scale)
-
-def average_magnitude(c):
-    """
-    Function to calculate the average magnitude of a star
-    
-    Args:
-        c (Table): Table of stars.
-
-    Returns:
-        float: Average magnitude of the star.
-    """
-
-    return np.mean([c['Jmag'], c['Hmag'], c['Kmag']])
 
 def example_plot_scatter_field(ax=None):
     """
