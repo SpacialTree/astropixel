@@ -21,9 +21,6 @@ class StarPlotter:
         self.cat = catalog_querry.get_2mass_catalog(coord, radius)
         self.wcs = self.get_wcs()
         self.crosshair = False
-
-    def set_crosshair(self, crosshair=True):
-        self.crosshair = crosshair
     
     def get_wcs(self):
         """ 
