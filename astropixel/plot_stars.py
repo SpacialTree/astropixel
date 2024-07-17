@@ -66,7 +66,7 @@ class StarPlotter:
             coordi = SkyCoord(c['RAJ2000'], c['DEJ2000'], unit=(u.deg, u.deg), frame='icrs')
             pix_cord = coordi.to_pixel(self.wcs)
             std = scale_the_magnitude(c[band], scale=5)*self.size_scale
-            psf += star.generate_cross_psf(np.round(pix_cord[0]), np.round(pix_cord[1]), std, 0.5, grid_size=self.size[0])
+            psf += star.generate_cross_psf(np.round(pix_cord[0]), np.round(pix_cord[1]), std, 0.5, size=self.size)
         
         return psf
 
