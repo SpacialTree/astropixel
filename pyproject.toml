@@ -9,8 +9,8 @@ description = "Astropixel project"
 authors = ["Savannah Gramze <savannahgramze@ufl.edu>", "S M Rafee Adnan <smrafee.adnan@louisville.edu>"]
 
 dependencies = [
-    "astropy",
-    "numpy",
-    "matplotlib",
-    python"
+    "astropy >= 4.3.0",
+    "numpy >= 1.21.0",
+    "matplotlib >= 3.4.2",
+    python >=3.9"
 ]
