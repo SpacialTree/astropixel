@@ -7,8 +7,8 @@ name = "astropixel"
 version = "0.1.0"
 description = "Astropixel project"
 authors = [
-    {author = "Savannah Gramze", email = "savannahgramze@ufl.edu"}, 
-    {author = "S M Rafee Adnan", email = "smrafee.adnan@louisville.edu"},
+    {name = "Savannah Gramze", email = "savannahgramze@ufl.edu"}, 
+    {name = "S M Rafee Adnan", email = "smrafee.adnan@louisville.edu"},
     ]
 
 dependencies = [
