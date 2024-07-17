@@ -6,7 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "astropixel"
 version = "0.1.0"
 description = "Astropixel project"
-authors = ["Savannah Gramze <savannahgramze@ufl.edu>", "S M Rafee Adnan <smrafee.adnan@louisville.edu>"]
+authors = [
+    {author = "Savannah Gramze", email = "savannahgramze@ufl.edu"}, 
+    {author = "S M Rafee Adnan", email = "smrafee.adnan@louisville.edu"},
+    ]
 
 dependencies = [
     "astropy >= 4.3.0",
