@@ -1,26 +1,15 @@
 from astropy import units as u
 from astropy.coordinates import SkyCoord
-from astroquery.sdss import SDSS
+from astroquery.vizier import Vizier
 import numpy as np
 import matplotlib.pyplot as plt
 
-def get_sdss_catalog_circ(ra, dec, radius=1.0*u.deg):
+def get_2mass_catalog(coord, radius=1.0*u.arcmin):
     """
-    Function to get the SDSS catalog around a given RA and DEC
+    Function to get 2MASS catalog
     """
-    # create a SkyCoord object
-    c = SkyCoord(ra=ra, dec=dec, unit=(u.deg, u.deg), frame='icrs')
-    # query the SDSS catalog
-    xid = SDSS.query_region(c, radius=radius)
-
-def get_sdss_catalog_rect(ra, dec, width=1.0*u.deg, height=1.0*u.deg):
-    """
-    Function to get the SDSS catalog around a given RA and DEC
-    """
-    # create a SkyCoord object
-    c = SkyCoord(ra=ra, dec=dec, unit=(u.deg, u.deg), frame='icrs')
-    # query the SDSS catalog
-    xid = SDSS.query_region(c, width=width, height=height)
+    guide = Vizier(catalog="II/246").query_region(coord, radius=radius)[0]
+    return guide
 
 def get_random_coordinates():
     """
@@ -28,5 +17,12 @@ def get_random_coordinates():
     """
     ra = np.random.uniform(0, 360)
     dec = np.random.uniform(-90, 90)
-    return ra, dec
+    return SkyCoord(ra=ra, dec=dec, unit=(u.deg, u.deg), frame='icrs')
 
+def get_random_coordinates_gal():
+    """
+    Function to generate random coordinates
+    """
+    l = np.random.uniform(0, 360)
+    b = np.random.uniform(-5, 5)
+    return SkyCoord(l=l, b=b, unit=(u.deg, u.deg), frame='galactic')
