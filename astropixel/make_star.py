@@ -5,9 +5,9 @@ class GaussianCrossPSF:
     def __init__(self, amplitude=1):
         self.amplitude = amplitude
 
-    def generate_cross_psf(self, x_center, y_center, stddev, background_factor, grid_size_x=300, grid_size_y=200):
-        x = np.linspace(0, grid_size_x-1, grid_size_x)
-        y = np.linspace(0, grid_size_y-1, grid_size_y)
+    def generate_cross_psf(self, x_center, y_center, stddev, background_factor, size=(200, 200)):
+        x = np.linspace(0, size[0]-1, size[0])
+        y = np.linspace(0, size[1]-1, size[1])
         x, y = np.meshgrid(x, y)
         
         # Calculate the Gaussian
@@ -28,15 +28,15 @@ class GaussianCrossPSF:
         
         return psf_cross
 
-    def plot_multiple_cross_psfs(self, centers_stddevs, grid_size_x=300, grid_size_y=200):
-        combined_psf = np.zeros((grid_size_y, grid_size_x))
+    def plot_multiple_cross_psfs(self, centers_stddevs, size=(200, 200)):
+        combined_psf = np.zeros((size[0], size[1]))
         
         for (x_center, y_center, stddev, background_factor) in centers_stddevs:
-            psf_cross = self.generate_cross_psf(x_center, y_center, stddev, background_factor, grid_size_x, grid_size_y)
+            psf_cross = self.generate_cross_psf(x_center, y_center, stddev, background_factor, size=size)
             combined_psf += psf_cross
         
         plt.figure(figsize=(6, 6))
-        plt.imshow(combined_psf, extent=(0, grid_size_x-1, 0, grid_size_y-1), origin='lower')
+        plt.imshow(combined_psf, extent=(0, size[0]-1, 0, size[1]-1), origin='lower')
         plt.colorbar()
         plt.xlabel('X')
         plt.ylabel('Y')
@@ -45,4 +45,4 @@ class GaussianCrossPSF:
 # Example:
 psf = GaussianCrossPSF(amplitude=1)
 centers_stddevs = [(5.6, 5, 2.5, 0.5), (10, 20, 3, 0.4), (25, 10, 5, 0.4)]
-psf.plot_multiple_cross_psfs(centers_stddevs, grid_size_x=100, grid_size_y=67)
+psf.plot_multiple_cross_psfs(centers_stddevs, size=(100, 67))#grid_size_x=100, grid_size_y=67)
