@@ -15,9 +15,10 @@ class GaussianCrossPSF:
             y_center (float): y coordinate of the center of the star
             stddev (float): Standard deviation of the Gaussian function to control the size
             background_factor (float): A number from 0 to 1 to tune the masking
-            grid_size_x (float): Size of X axis
-            grid_size_y (float): Size of Y axis
+            size (tuple): Size of the output image
 
+        Returns:
+            np.ndarray: A 2D numpy array representing the star
         
         """
         x = np.linspace(0, size[0]-1, size[1])
