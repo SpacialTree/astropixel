@@ -6,6 +6,19 @@ class GaussianCrossPSF:
         self.amplitude = amplitude
 
     def generate_cross_psf(self, x_center, y_center, stddev, background_factor, grid_size=100):
+        """Generate Stars using Gaussian
+
+        Function to generate a star-like pixel art using gaussian function and masking.
+
+        Args:
+            x_center (float): x coordinate of the center of the star
+            y_center (float): y coordinate of the center of the star
+            stddev (float): Standard deviation of the Gaussian function to control the size
+            background_factor (float): A number from 0 to 1 to tune the masking
+            grid size:
+
+        
+        """
         x = np.linspace(0, grid_size-1, grid_size)
         y = np.linspace(0, grid_size-1, grid_size)
         x, y = np.meshgrid(x, y)
