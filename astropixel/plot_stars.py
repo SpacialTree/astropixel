@@ -20,6 +20,7 @@ class StarPlotter:
         self.scale = radius*2
         self.cat = catalog_querry.get_2mass_catalog(coord, radius)
         self.wcs = self.get_wcs()
+        self.crosshair = False
 
     def get_wcs(self):
         """ 
@@ -33,6 +34,15 @@ class StarPlotter:
 
         return wcs
 
+    def plot_crosshair(ax):
+        """
+        Function to plot crosshair
+        """
+
+        ax.scatter(self.coord.ra.deg, self.coord.dec.deg, s=100, edgecolor='r', facecolor='none')
+        ax.scatter(self.coord.ra.deg, self.coord.dec.deg, s=100, marker='+', color='r')
+        return ax
+
     def plot_scatter_field(self, labels=False, ax=None):
         """
         Function to plot field with scatter
@@ -43,8 +53,8 @@ class StarPlotter:
             ax = fig.add_subplot(111, projection=self.wcs)
 
         ax.scatter(self.cat['RAJ2000'], self.cat['DEJ2000'], s=50, marker='*', color='k')
-        ax.scatter(self.coord.ra.deg, self.coord.dec.deg, s=100, edgecolor='r', facecolor='none')
-        ax.scatter(self.coord.ra.deg, self.coord.dec.deg, s=100, marker='+', color='r')
+        if self.crosshair:
+            ax = self.plot_crosshair(ax)
 
         if labels:
             ax.set_xlabel('Right Ascension')
@@ -86,6 +96,10 @@ class StarPlotter:
             ax.set_ylabel('Declination')
         else:
             ax.set_axis_off()
+        
+        if self.crosshair:
+            ax = self.plot_crosshair(ax)
+        
         return ax
 
     def plot_cross_psf_field_rgb(self, labels=False, ax=None):
@@ -109,6 +123,10 @@ class StarPlotter:
             ax.set_ylabel('Declination')
         else:
             ax.set_axis_off()
+
+        if self.crosshair:
+            ax = self.plot_crosshair(ax)
+        
         return ax
 
 def make_rgb_scaled_image(psf_R, psf_G, psf_B):
