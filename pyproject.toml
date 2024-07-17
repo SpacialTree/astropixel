@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "astropixel"
 version = "0.1.0"
 description = "Astropixel project"
-authors = ["Savannah Gramze <savannahgramze@ufl.edu>", "Your Name <your email>"]
+authors = ["Savannah Gramze <savannahgramze@ufl.edu>", "S M Rafee Adnan <smrafee.adnan@louisville.edu>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
