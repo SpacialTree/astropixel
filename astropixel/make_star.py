@@ -42,7 +42,10 @@ class GaussianCrossPSF:
         plt.ylabel('Y')
         plt.show()
 
-# Example:
-psf = GaussianCrossPSF(amplitude=1)
-centers_stddevs = [(5, 5, 2.5, 0.5), (10, 20, 3, 0.4), (25, 10, 5, 0.4)]
-psf.plot_multiple_cross_psfs(centers_stddevs, grid_size=30)
+def main():
+    psf = GaussianCrossPSF(amplitude=1)
+    centers_stddevs = [(5, 5, 2.5, 0.5), (10, 20, 3, 0.4), (25, 10, 5, 0.4)]
+    psf.plot_multiple_cross_psfs(centers_stddevs, grid_size=30)
+
+if __name__ == '__main__':
+    main()

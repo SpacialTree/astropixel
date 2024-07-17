@@ -1,4 +1,4 @@
-from astropy import Cutout2D
+from astropy.nddata import Cutout2D
 import numpy as np
 from astropy.io import fits
 from astropy.wcs import WCS
