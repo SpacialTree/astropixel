@@ -29,15 +29,15 @@ class StarPlotter:
 
         self.coord = coord
         self.size = size
-        self.size_scale = size[0]/10
+        self.size_scale = np.min(size)/10
         self.radius = radius
         self.scale = radius*2
         self.catalog_name = catalog_name
-        self.set_catalog()
+        self.set_catalog(catalog_name)
         self.wcs = self.get_wcs()
         self.crosshair = False
     
-    def set_catalog(self, catalog_name=self.catalog_name):
+    def set_catalog(self, catalog_name):
         """ 
         Function to get catalog
 
@@ -117,7 +117,7 @@ class StarPlotter:
         plt.tight_layout()
         return ax
 
-    def get_cross_psf_field_image(self, band=self.R):
+    def get_cross_psf_field_image(self, band='Kmag'):
         """
         Function to get cross PSF field image
 
