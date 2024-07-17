@@ -22,6 +22,9 @@ class StarPlotter:
         self.wcs = self.get_wcs()
         self.crosshair = False
 
+    def set_crosshair(self, crosshair=True):
+        self.crosshair = crosshair
+    
     def get_wcs(self):
         """ 
         Function to get WCS
