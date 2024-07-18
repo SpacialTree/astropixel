@@ -11,9 +11,9 @@ import catalog_querry
 import make_star
 
 
-class StarPlotter:
+class StarPlotter(object):
     """ 
-    Class to plot stars
+    Object for plotting stars
     """
 
     def __init__(self, coord, size=(1000, 1000), radius=1*u.arcmin, catalog_name='2MASS'):
@@ -32,6 +32,9 @@ class StarPlotter:
         self.size_scale = np.min(size)/10
         self.radius = radius
         self.scale = radius*2
+        self.R = None
+        self.G = None
+        self.B = None
         self.catalog_name = catalog_name
         self.set_catalog(catalog_name)
         self.wcs = self.get_wcs()
@@ -51,12 +54,13 @@ class StarPlotter:
             self.R = 'Kmag'
             self.G = 'Hmag'
             self.B = 'Jmag'
+        elif catalog_name == 'SDSS':
+            self.cat = catalog_querry.get_sdss_catalog(self.coord, self.radius)
+            self.R = 'r'
+            self.G = 'g'
+            self.B = 'u'
         else:
-            print("No catalog found. Setting 2MASS catalog.")
-            self.cat = catalog_querry.get_2mass_catalog(self.coord, self.radius)
-            self.R = 'Kmag'
-            self.G = 'Hmag'
-            self.B = 'Jmag'
+            self.cat = catalog_querry.get_catalog(catalog_name, self.coord, self.radius)
     
     def get_wcs(self):
         """ 
@@ -104,7 +108,7 @@ class StarPlotter:
             fig = plt.figure(figsize=(10, 8))
             ax = fig.add_subplot(111, projection=self.wcs)
 
-        ax.scatter(self.cat['RAJ2000'], self.cat['DEJ2000'], s=50, marker='*', color='k')
+        ax.scatter(self.cat['RAJ2000'], self.cat['DEJ2000'], s=50, transform=ax.get_transform('world'), marker='*', color='k')
         if self.crosshair:
             ax = self.plot_crosshair(ax)
 
