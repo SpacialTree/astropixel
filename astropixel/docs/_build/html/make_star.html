@@ -48,7 +48,14 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="catalog_querry.html">Catalog Querry Functions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Make Star Functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Make Star Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#make_star.GaussianCrossPSF"><code class="docutils literal notranslate"><span class="pre">GaussianCrossPSF</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#make_star.GaussianCrossPSF.generate_cross_psf"><code class="docutils literal notranslate"><span class="pre">GaussianCrossPSF.generate_cross_psf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#make_star.GaussianCrossPSF.plot_multiple_cross_psfs"><code class="docutils literal notranslate"><span class="pre">GaussianCrossPSF.plot_multiple_cross_psfs()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="plot_stars.html">Plot Stars Functions</a></li>
 </ul>
 
@@ -79,7 +86,52 @@
   <section id="make-star-functions">
 <span id="make-star"></span><h1>Make Star Functions<a class="headerlink" href="#make-star-functions" title="Permalink to this heading"></a></h1>
 <p>Functions to make stars.</p>
-<span class="target" id="module-make_star"></span></section>
+<span class="target" id="module-make_star"></span><dl class="py class">
+<dt class="sig sig-object py" id="make_star.GaussianCrossPSF">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">make_star.</span></span><span class="sig-name descname"><span class="pre">GaussianCrossPSF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#make_star.GaussianCrossPSF" title="Permalink to this definition"></a></dt>
+<dd><p>Class to generate star-like pixel art using Gaussian function and masking.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="make_star.GaussianCrossPSF.generate_cross_psf">
+<span class="sig-name descname"><span class="pre">generate_cross_psf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stddev</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(300,</span> <span class="pre">200)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#make_star.GaussianCrossPSF.generate_cross_psf" title="Permalink to this definition"></a></dt>
+<dd><p>Generate Stars using Gaussian</p>
+<p>Function to generate a star-like pixel art using gaussian function and masking.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_center</strong> (<em>float</em>) – x coordinate of the center of the star</p></li>
+<li><p><strong>y_center</strong> (<em>float</em>) – y coordinate of the center of the star</p></li>
+<li><p><strong>stddev</strong> (<em>float</em>) – Standard deviation of the Gaussian function to control the size</p></li>
+<li><p><strong>background_factor</strong> (<em>float</em>) – A number from 0 to 1 to tune the masking</p></li>
+<li><p><strong>size</strong> (<em>tuple</em>) – Size of the output image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A 2D numpy array representing the star</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="make_star.GaussianCrossPSF.plot_multiple_cross_psfs">
+<span class="sig-name descname"><span class="pre">plot_multiple_cross_psfs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centers_stddevs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(300,</span> <span class="pre">200)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#make_star.GaussianCrossPSF.plot_multiple_cross_psfs" title="Permalink to this definition"></a></dt>
+<dd><p>Plot Multiple Stars</p>
+<p>Function to plot multiple star-like pixel art using gaussian function and masking.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>centers_stddevs</strong> (<em>list</em>) – A list of tuples containing the x_center, y_center, stddev, and background_factor of each star</p></li>
+<li><p><strong>size</strong> (<em>tuple</em>) – Size of the output image</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 
 
            </div>

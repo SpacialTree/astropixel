@@ -6,7 +6,8 @@ class GaussianCrossPSF(object):
     Class to generate star-like pixel art using Gaussian function and masking.
     """
     def __init__(self, amplitude=1):
-        """Initialize the GaussianCrossPSF class
+        """
+        Initialize the GaussianCrossPSF class
 
         Args:
             amplitude (float): Amplitude of the Gaussian function
@@ -15,7 +16,8 @@ class GaussianCrossPSF(object):
         self.amplitude = amplitude
 
     def generate_cross_psf(self, x_center, y_center, stddev, background_factor, size=(300, 200)):
-        """Generate Stars using Gaussian
+        """
+        Generate Stars using Gaussian
 
         Function to generate a star-like pixel art using gaussian function and masking.
 
@@ -53,7 +55,8 @@ class GaussianCrossPSF(object):
         return psf_cross
 
     def plot_multiple_cross_psfs(self, centers_stddevs, size=(300, 200)):
-        """Plot Multiple Stars
+        """
+        Plot Multiple Stars
         
         Function to plot multiple star-like pixel art using gaussian function and masking.
 
