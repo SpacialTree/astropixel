@@ -17,6 +17,7 @@ dependencies = [
     "matplotlib >= 3.4.2",
     "spectral-cube >= 0.6.5",
     "regions >= 0.9",
+    "astroquery >= 0.4.7"
 ]
 
 [tool.setuptools]
