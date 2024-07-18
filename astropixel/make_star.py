@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class GaussianCrossPSF(object):
+    """ 
+    Class to generate star-like pixel art using Gaussian function and masking.
+    """
     def __init__(self, amplitude=1):
         """Initialize the GaussianCrossPSF class
 
