@@ -24,6 +24,15 @@ def get_catalog(catalog_name, coord, radius=1.0*u.arcmin):
         print("No catalog found. Setting 2MASS catalog.")
         guide = get_2mass_catalog(coord, radius)
 
+    if len(guide) > 15:
+        for c in guide.colnames:
+            if 'mag' in c:
+                guide = guide[~np.isnan(np.array(guide[c]))]
+        if len(guide) <= 15:
+            return guide
+        else:
+            guide = guide[0:15]
+
     return guide
 
 def get_2mass_catalog(coord, radius=1.0*u.arcmin):
@@ -57,6 +66,9 @@ def get_sdss_catalog(coord, radius=1.0*u.arcmin):
     """
     guide = Vizier(catalog="V/147").query_region(coord, radius=radius)[0]
     return guide
+
+def get_catalogs_list():
+    return '2MASS', 'SDSS'
 
 def get_random_coordinates():
     """ Get Random Coordinates

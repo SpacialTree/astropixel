@@ -23,18 +23,23 @@ class StarPlotter(object):
         Args:
             coord (SkyCoord): Coordinates of the center of the field.
             size (tuple): Size of the field in pixels.
-            radius (Quantity): Radius of the field.
+            radius (Quantity): Radius of the field. Limited to < 3 arcmin due to catalog query limitations. 
+                               If there are no stars in the field, try increasing the radius or changing the 
+                               central coordinate.
 
         """
 
-        self.coord = coord
+        self.coord = coord.icrs
         self.size = size
         self.size_scale = np.min(size)/10
         self.radius = radius
         self.scale = radius*2
+        self.figsize = (5,4)
         self.R = None
         self.G = None
         self.B = None
+        self.RA = None
+        self.DEC = None
         self.catalog_name = catalog_name
         self.set_catalog(catalog_name)
         self.wcs = self.get_wcs()
@@ -54,11 +59,15 @@ class StarPlotter(object):
             self.R = 'Kmag'
             self.G = 'Hmag'
             self.B = 'Jmag'
+            self.RA = 'RAJ2000'
+            self.DEC = 'DEJ2000'
         elif catalog_name == 'SDSS':
             self.cat = catalog_querry.get_sdss_catalog(self.coord, self.radius)
-            self.R = 'r'
-            self.G = 'g'
-            self.B = 'u'
+            self.R = 'imag'
+            self.G = 'gmag'
+            self.B = 'umag'
+            self.RA = 'RA_ICRS'
+            self.DEC = 'DE_ICRS'
         else:
             self.cat = catalog_querry.get_catalog(catalog_name, self.coord, self.radius)
     
@@ -105,10 +114,10 @@ class StarPlotter(object):
         """
 
         if ax is None:
-            fig = plt.figure(figsize=(10, 8))
+            fig = plt.figure(figsize=self.figsize)
             ax = fig.add_subplot(111, projection=self.wcs)
 
-        ax.scatter(self.cat['RAJ2000'], self.cat['DEJ2000'], s=50, transform=ax.get_transform('world'), marker='*', color='orange')
+        ax.scatter(self.cat[self.RA], self.cat[self.DEC], s=50, transform=ax.get_transform('world'), marker='*', color='orange')
         if self.crosshair:
             ax = self.plot_crosshair(ax)
 
@@ -135,14 +144,14 @@ class StarPlotter(object):
         psf = np.zeros((self.size[1], self.size[0]))
 
         for c in self.cat:
-            coordi = SkyCoord(c['RAJ2000'], c['DEJ2000'], unit=(u.deg, u.deg), frame='icrs')
+            coordi = SkyCoord(c[self.RA], c[self.DEC], unit=(u.deg, u.deg), frame='icrs')
             pix_cord = coordi.to_pixel(self.wcs)
             std = scale_the_magnitude(c[band], scale=5)*self.size_scale
             psf += star.generate_cross_psf(np.round(pix_cord[0]), np.round(pix_cord[1]), std, 0.5, size=self.size)
         
         return psf
 
-    def plot_cross_psf_field(self, labels=False, ax=None):
+    def plot_cross_psf_field(self, band='Kmag', labels=False, ax=None):
         """
         Function to plot cross PSF field with imshow
 
@@ -154,7 +163,7 @@ class StarPlotter(object):
             ax (Axes): Axes object.
         """
         if ax is None:
-            fig = plt.figure(figsize=(10, 8))
+            fig = plt.figure(figsize=self.figsize)
             ax = fig.add_subplot(111, projection=self.wcs)
 
         psf = self.get_cross_psf_field_image(band=self.R)
@@ -183,7 +192,7 @@ class StarPlotter(object):
             ax (Axes): Axes object.
         """
         if ax is None:
-            fig = plt.figure(figsize=(10, 8))
+            fig = plt.figure(figsize=self.figsize)
             ax = fig.add_subplot(111, projection=self.wcs)
 
         #psf = self.get_cross_psf_field_image(band='Kmag')
@@ -226,15 +235,15 @@ def make_rgb_scaled_image(psf_R, psf_G, psf_B):
     ).swapaxes(0,2).swapaxes(0,1)
 
     rgb_scaled = np.array([
-            simple_norm(rgb[:,:,0], stretch='asinh', min_cut=0, max_cut=1)(rgb[:,:,0]),
-            simple_norm(rgb[:,:,1], stretch='asinh', min_cut=0, max_cut=1)(rgb[:,:,1]),
-            simple_norm(rgb[:,:,2], stretch='asinh', min_cut=0, max_cut=1)(rgb[:,:,2]),
+            simple_norm(rgb[:,:,0], stretch='asinh', vmin=0, vmax=1)(rgb[:,:,0]),
+            simple_norm(rgb[:,:,1], stretch='asinh', vmin=0, vmax=1)(rgb[:,:,1]),
+            simple_norm(rgb[:,:,2], stretch='asinh', vmin=0, vmax=1)(rgb[:,:,2]),
         ]
     ).swapaxes(0,2)
 
     return rgb_scaled.swapaxes(0,1)
 
-def plot_random_scatter_field(size=(1000, 1000), radius=1*u.arcmin, ax=None):
+def plot_random_scatter_field(size=(100, 100), radius=1*u.arcmin, ax=None):
     """
     Function to plot random field.
 
@@ -248,7 +257,39 @@ def plot_random_scatter_field(size=(1000, 1000), radius=1*u.arcmin, ax=None):
     """
     coord = catalog_querry.get_random_coordinates_gal()
     field = StarPlotter(coord, radius=radius, size=size)
-    field.plot_field(ax=ax)
+    field.plot_scatter_field(ax=ax)
+
+def plot_random_cross_psf_field(size=(100, 100), radius=1*u.arcmin, ax=None):
+    """
+    Function to plot random cross PSF field.
+
+    Args:
+        size (tuple): Size of the field in pixels.
+        radius (Quantity): Radius of the field.
+        ax (Axes): Axes object.
+
+    Returns:
+        ax (Axes): Axes object.
+    """
+    coord = catalog_querry.get_random_coordinates_gal()
+    field = StarPlotter(coord, radius=radius, size=size)
+    field.plot_cross_psf_field(ax=ax)
+
+def plot_random_cross_psf_field_rgb(size=(100, 100), radius=1*u.arcmin, ax=None):
+    """
+    Function to plot random cross PSF field RGB.
+
+    Args:
+        size (tuple): Size of the field in pixels.
+        radius (Quantity): Radius of the field.
+        ax (Axes): Axes object.
+
+    Returns:
+        ax (Axes): Axes object.
+    """
+    coord = catalog_querry.get_random_coordinates_gal()
+    field = StarPlotter(coord, radius=radius, size=size)
+    field.plot_cross_psf_field_rgb(ax=ax)
 
 def magnitude_to_luminosity(magnitude):
     """ 
@@ -298,7 +339,7 @@ def example_plot_scatter_field(ax=None):
     field = StarPlotter(coord, size=(1000, 1000), radius=1*u.arcmin)
 
     if ax is None:
-        fig = plt.figure(figsize=(10, 8))
+        fig = plt.figure(figsize=(5, 4))
         ax = plt.subplot(111, projection=field.wcs)
 
     ax = field.plot_scatter_field(ax=ax)
@@ -319,7 +360,7 @@ def example_plot_cross_psf_field(ax=None):
     field = StarPlotter(coord, size=(1000, 1000), radius=1*u.arcmin)
 
     if ax is None:
-        fig = plt.figure(figsize=(10, 8))
+        fig = plt.figure(figsize=(5, 4))
         ax = plt.subplot(111, projection=field.wcs)
     
     ax = field.plot_cross_psf_field(ax=ax)
@@ -332,7 +373,7 @@ def example_plot_cross_psf_field_rgb():
     coord = SkyCoord.from_name('Barnard\'s Star')
     field = StarPlotter(coord, size=(50, 100), radius=1*u.arcmin)
 
-    fig = plt.figure(figsize=(10, 8))
+    fig = plt.figure(figsize=(5, 4))
     ax = plt.subplot(111, projection=field.wcs)
     
     ax = field.plot_cross_psf_field_rgb(ax=ax)
