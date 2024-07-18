@@ -1,12 +1,23 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-class GaussianCrossPSF:
+class GaussianCrossPSF(object):
+    """ 
+    Class to generate star-like pixel art using Gaussian function and masking.
+    """
     def __init__(self, amplitude=1):
+        """
+        Initialize the GaussianCrossPSF class
+
+        Args:
+            amplitude (float): Amplitude of the Gaussian function
+        
+        """
         self.amplitude = amplitude
 
     def generate_cross_psf(self, x_center, y_center, stddev, background_factor, size=(300, 200)):
-        """Generate Stars using Gaussian
+        """
+        Generate Stars using Gaussian
 
         Function to generate a star-like pixel art using gaussian function and masking.
 
@@ -44,7 +55,18 @@ class GaussianCrossPSF:
         return psf_cross
 
     def plot_multiple_cross_psfs(self, centers_stddevs, size=(300, 200)):
-        combined_psf = np.zeros((size[0], size[1]))
+        """
+        Plot Multiple Stars
+        
+        Function to plot multiple star-like pixel art using gaussian function and masking.
+
+        Args:
+            centers_stddevs (list): A list of tuples containing the x_center, y_center, stddev, and background_factor of each star
+            size (tuple): Size of the output image
+
+        """
+
+        combined_psf = np.zeros((size[1], size[0]))
         
         for (x_center, y_center, stddev, background_factor) in centers_stddevs:
             psf_cross = self.generate_cross_psf(x_center, y_center, stddev, background_factor, size=size)
