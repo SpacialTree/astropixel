@@ -14,7 +14,7 @@ def test_generate_cross_psf():
     background_factor = 0.1
     size = (300, 200)
     psf_cross = psf.generate_cross_psf(x_center, y_center, stddev, background_factor, size=size)
-    assert psf_cross.shape == size
+    assert psf_cross.shape == size.T
     assert np.max(psf_cross) == 1
     assert np.min(psf_cross) == 0
     assert np.argmax(psf_cross) == (150, 100)
