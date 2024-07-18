@@ -3,6 +3,12 @@ import matplotlib.pyplot as plt
 
 class GaussianCrossPSF:
     def __init__(self, amplitude=1):
+        """Initialize the GaussianCrossPSF class
+
+        Args:
+            amplitude (float): Amplitude of the Gaussian function
+        
+        """
         self.amplitude = amplitude
 
     def generate_cross_psf(self, x_center, y_center, stddev, background_factor, size=(300, 200)):
