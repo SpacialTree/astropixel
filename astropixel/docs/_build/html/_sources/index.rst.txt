@@ -11,11 +11,8 @@ Welcome to AstroPixel's documentation!
    :caption: Contents:
 
    catalog_querry.rst
-<<<<<<< HEAD
    make_star.rst
-=======
    plot_stars.rst
->>>>>>> 603e8dfaa0751ab7b8da5a0f9d67243ad1535809
 
 
 Indices and tables
