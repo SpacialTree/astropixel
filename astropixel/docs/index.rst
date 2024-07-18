@@ -11,6 +11,7 @@ Welcome to AstroPixel's documentation!
    :caption: Contents:
 
    catalog_querry.rst
+   plot_stars.rst
 
 
 Indices and tables
