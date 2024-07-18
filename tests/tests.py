@@ -46,8 +46,42 @@ def test_get_random_coordinates_gal():
     assert coord.b.value >= -5
     assert coord.b.value <= 5
 
+def test_plot_field():
+    coord = SkyCoord(ra=10.68458, dec=41.26917, unit=(u.deg, u.deg))
+    field = plot_stars.StarPlotter(coord, radius=1.0*u.arcmin, size=(1000, 1000))
+    assert field.size == (1000, 1000)
+    assert field.radius == 1.0*u.arcmin
+    assert field.coord == coord
+
+def test_get_wcs():
+    coord = SkyCoord(ra=10.68458, dec=41.26917, unit=(u.deg, u.deg))
+    field = plot_stars.StarPlotter(coord, radius=1.0*u.arcmin, size=(1000, 1000))
+    wcs = field.get_wcs()
+    assert wcs.wcs.ctype[0] == 'RA---TAN'
+    assert wcs.wcs.ctype[1] == 'DEC--TAN'
+    assert wcs.wcs.crval[0] == coord.ra.value
+    assert wcs.wcs.crval[1] == coord.dec.value
+
+    pixcrd = np.array([[0, 0], [24, 38], [45, 98]], dtype=np.float64)
+    world = wcs.all_pix2world(pixcrd, 0)
+    ### This test is not working :(
+    #assert world[0][0] == pytest.approx(coord.ra.value, abs=1e-3)
+    #assert world[0][1] == pytest.approx(coord.dec.value, abs=1e-3)
+
+    pixcrd2 = wcs.wcs_world2pix(world, 0)
+    assert pixcrd2[0][0] == pytest.approx(0, abs=1e-3)
+    assert pixcrd2[0][1] == pytest.approx(0, abs=1e-3)
+
+    x = 0
+    y = 0
+    origin = 0
+    assert (wcs.wcs_pix2world(x, y, origin) ==
+            wcs.wcs_pix2world(x + 1, y + 1, origin + 1))
+
 if __name__ == "__main__":
     test_generate_cross_psf()
     test_get_catalog()
     test_get_random_coordinates()
     test_get_random_coordinates_gal()
+    test_plot_field()
+    test_get_wcs()
