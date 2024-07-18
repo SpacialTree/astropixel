@@ -20,6 +20,22 @@ def get_2mass_catalog(coord, radius=1.0*u.arcmin):
     guide = Vizier(catalog="II/246").query_region(coord, radius=radius)[0]
     return guide
 
+def get_sdss_catalog(coord, radius=1.0*u.arcmin):
+    """ Query SDSS Catalog
+    
+    Function to get SDSS catalog at a given coordinate and radius using Vizier.
+
+    Args:
+        coord (SkyCoord): Coordinates of the center of the search.
+        radius (Quantity): Radius of the search.
+
+    Returns:
+        Table: Table of the SDSS catalog.
+
+    """
+    guide = Vizier(catalog="V/147").query_region(coord, radius=radius)[0]
+    return guide
+
 def get_random_coordinates():
     """ Get Random Coordinates
 
