@@ -22,6 +22,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Make Star Functions" href="make_star.html" />
     <link rel="prev" title="Welcome to AstroPixel’s documentation!" href="index.html" /> 
 </head>
 
@@ -48,11 +49,14 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Catalog Querry Functions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#catalog_querry.get_2mass_catalog"><code class="docutils literal notranslate"><span class="pre">get_2mass_catalog()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#catalog_querry.get_catalog"><code class="docutils literal notranslate"><span class="pre">get_catalog()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#catalog_querry.get_random_coordinates"><code class="docutils literal notranslate"><span class="pre">get_random_coordinates()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#catalog_querry.get_random_coordinates_gal"><code class="docutils literal notranslate"><span class="pre">get_random_coordinates_gal()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#catalog_querry.get_sdss_catalog"><code class="docutils literal notranslate"><span class="pre">get_sdss_catalog()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="make_star.html">Make Star Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plot_stars.html">Plot Stars Functions</a></li>
 </ul>
 
         </div>
@@ -96,6 +100,28 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Table of the 2MASS catalog.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Table</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catalog_querry.get_catalog">
+<span class="sig-prename descclassname"><span class="pre">catalog_querry.</span></span><span class="sig-name descname"><span class="pre">get_catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">catalog_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius=&lt;Quantity</span> <span class="pre">1.</span> <span class="pre">arcmin&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catalog_querry.get_catalog" title="Permalink to this definition"></a></dt>
+<dd><p>Get Catalog</p>
+<p>Function to get catalog at a given coordinate and radius using Vizier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>catalog_name</strong> (<em>str</em>) – Name of the catalog.</p></li>
+<li><p><strong>coord</strong> (<em>SkyCoord</em>) – Coordinates of the center of the search.</p></li>
+<li><p><strong>radius</strong> (<em>Quantity</em>) – Radius of the search.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Table of the catalog.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Table</p>
@@ -161,6 +187,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Welcome to AstroPixel’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="make_star.html" class="btn btn-neutral float-right" title="Make Star Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
