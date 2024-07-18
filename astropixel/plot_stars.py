@@ -132,7 +132,7 @@ class StarPlotter(object):
             np.ndarray: Image of the field with cross PS
         """
         star = make_star.GaussianCrossPSF(amplitude=1)
-        psf = np.zeros((self.size[0], self.size[1]))
+        psf = np.zeros((self.size[1], self.size[0]))
 
         for c in self.cat:
             coordi = SkyCoord(c['RAJ2000'], c['DEJ2000'], unit=(u.deg, u.deg), frame='icrs')
@@ -330,7 +330,7 @@ def example_plot_cross_psf_field_rgb():
     Example to plot cross PSF field RGB
     """
     coord = SkyCoord.from_name('Barnard\'s Star')
-    field = StarPlotter(coord, size=(50, 50), radius=1*u.arcmin)
+    field = StarPlotter(coord, size=(50, 100), radius=1*u.arcmin)
 
     fig = plt.figure(figsize=(10, 8))
     ax = plt.subplot(111, projection=field.wcs)
