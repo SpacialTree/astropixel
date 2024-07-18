@@ -104,7 +104,7 @@ class StarPlotter:
             fig = plt.figure(figsize=(10, 8))
             ax = fig.add_subplot(111, projection=self.wcs)
 
-        ax.scatter(self.cat['RAJ2000'], self.cat['DEJ2000'], s=50, marker='*', color='k')
+        ax.scatter(self.cat['RAJ2000'], self.cat['DEJ2000'], s=50, transform=ax.get_transform('world'), marker='*', color='k')
         if self.crosshair:
             ax = self.plot_crosshair(ax)
 
