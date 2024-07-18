@@ -1,8 +1,9 @@
 import pytest
 import numpy as np
 import astropixel
-from astropixel import make_star
 from astropixel import catalog_querry
+from astropixel import plot_stars
+from astropixel import make_star
 from astropixel.make_star import GaussianCrossPSF
 from astropy import units as u
 from astropy.coordinates import SkyCoord
