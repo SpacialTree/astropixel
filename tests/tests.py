@@ -10,6 +10,9 @@ from astropy.coordinates import SkyCoord
 from astropy.table import Table
 
 def test_generate_cross_psf():
+    """ 
+    Test the generate_cross_psf method of the GaussianCrossPSF class
+    """
     psf = make_star.GaussianCrossPSF(amplitude=1)
     x_center = 150
     y_center = 100
@@ -23,6 +26,9 @@ def test_generate_cross_psf():
     assert np.argmax(psf_cross) == 30150
 
 def test_get_catalog():
+    """
+    Test the get_catalog method of the catalog_querry module
+    """
     coord = SkyCoord(ra=10.68458, dec=41.26917, unit=(u.deg, u.deg))
     radius = 1.0*u.arcmin
     catalog_name = '2MASS'
@@ -31,6 +37,9 @@ def test_get_catalog():
     assert len(guide) > 0
 
 def test_get_random_coordinates():
+    """ 
+    Test the get_random_coordinates method of the catalog_querry module
+    """
     coord = catalog_querry.get_random_coordinates()
     assert isinstance(coord, SkyCoord)
     assert coord.ra.value >= 0
@@ -39,6 +48,9 @@ def test_get_random_coordinates():
     assert coord.dec.value <= 90
 
 def test_get_random_coordinates_gal():
+    """
+    Test the get_random_coordinates_gal method of the catalog_querry module
+    """
     coord = catalog_querry.get_random_coordinates_gal()
     assert isinstance(coord, SkyCoord)
     assert coord.l.value >= 0
@@ -47,6 +59,9 @@ def test_get_random_coordinates_gal():
     assert coord.b.value <= 5
 
 def test_plot_field():
+    """ 
+    Test the StarPlotter class of the plot_stars module
+    """
     coord = SkyCoord(ra=10.68458, dec=41.26917, unit=(u.deg, u.deg))
     field = plot_stars.StarPlotter(coord, radius=1.0*u.arcmin, size=(1000, 1000))
     assert field.size == (1000, 1000)
@@ -54,6 +69,9 @@ def test_plot_field():
     assert field.coord == coord
 
 def test_get_wcs():
+    """ 
+    Test the get_wcs method of the StarPlotter class
+    """
     coord = SkyCoord(ra=10.68458, dec=41.26917, unit=(u.deg, u.deg))
     field = plot_stars.StarPlotter(coord, radius=1.0*u.arcmin, size=(1000, 1000))
     wcs = field.get_wcs()
