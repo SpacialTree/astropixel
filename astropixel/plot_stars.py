@@ -7,8 +7,8 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-import catalog_querry
-import make_star
+from . import catalog_querry
+from . import make_star
 
 
 class StarPlotter(object):
