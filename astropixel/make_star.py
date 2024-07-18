@@ -44,7 +44,7 @@ class GaussianCrossPSF:
         return psf_cross
 
     def plot_multiple_cross_psfs(self, centers_stddevs, size=(300, 200)):
-        combined_psf = np.zeros((size[1], size[0]))
+        combined_psf = np.zeros((size[0], size[1]))
         
         for (x_center, y_center, stddev, background_factor) in centers_stddevs:
             psf_cross = self.generate_cross_psf(x_center, y_center, stddev, background_factor, size=size)
