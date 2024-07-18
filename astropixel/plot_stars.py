@@ -7,8 +7,8 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-import catalog_querry
-import make_star
+from . import catalog_querry
+from . import make_star
 
 
 class StarPlotter(object):
@@ -108,7 +108,7 @@ class StarPlotter(object):
             fig = plt.figure(figsize=(10, 8))
             ax = fig.add_subplot(111, projection=self.wcs)
 
-        ax.scatter(self.cat['RAJ2000'], self.cat['DEJ2000'], s=50, transform=ax.get_transform('world'), marker='*', color='k')
+        ax.scatter(self.cat['RAJ2000'], self.cat['DEJ2000'], s=50, transform=ax.get_transform('world'), marker='*', color='orange')
         if self.crosshair:
             ax = self.plot_crosshair(ax)
 
@@ -132,7 +132,7 @@ class StarPlotter(object):
             np.ndarray: Image of the field with cross PS
         """
         star = make_star.GaussianCrossPSF(amplitude=1)
-        psf = np.zeros((self.size[0], self.size[1]))
+        psf = np.zeros((self.size[1], self.size[0]))
 
         for c in self.cat:
             coordi = SkyCoord(c['RAJ2000'], c['DEJ2000'], unit=(u.deg, u.deg), frame='icrs')
@@ -330,7 +330,7 @@ def example_plot_cross_psf_field_rgb():
     Example to plot cross PSF field RGB
     """
     coord = SkyCoord.from_name('Barnard\'s Star')
-    field = StarPlotter(coord, size=(50, 50), radius=1*u.arcmin)
+    field = StarPlotter(coord, size=(50, 100), radius=1*u.arcmin)
 
     fig = plt.figure(figsize=(10, 8))
     ax = plt.subplot(111, projection=field.wcs)
