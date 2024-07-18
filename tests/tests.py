@@ -1,13 +1,15 @@
 import pytest
 import numpy as np
 import astropixel
+from astropixel import make_star
+from astropixel import catalog_querry
 from astropixel.make_star import GaussianCrossPSF
 from astropy import units as u
 from astropy.coordinates import SkyCoord
 from astropy.table import Table
 
 def test_generate_cross_psf():
-    psf = GaussianCrossPSF(amplitude=1)
+    psf = make_star.GaussianCrossPSF(amplitude=1)
     x_center = 150
     y_center = 100
     stddev = 10
@@ -20,5 +22,5 @@ def test_generate_cross_psf():
     assert np.argmax(psf_cross) == (150, 100)
 
 if __name__ == "__main__":
-    astropixel.catalog_querry.get_2mass_catalog(SkyCoord(ra=0, dec=0, unit='deg'), 1*u.arcmin)
+    catalog_querry.get_2mass_catalog(SkyCoord(ra=0, dec=0, unit='deg'), 1*u.arcmin)
     test_generate_cross_psf()
