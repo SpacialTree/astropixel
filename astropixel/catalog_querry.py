@@ -4,6 +4,28 @@ from astroquery.vizier import Vizier
 import numpy as np
 import matplotlib.pyplot as plt
 
+def get_catalog(catalog_name, coord, radius=1.0*u.arcmin):
+    """ Get Catalog
+    
+    Function to get catalog at a given coordinate and radius using Vizier.
+
+    Args:
+        catalog_name (str): Name of the catalog.
+        coord (SkyCoord): Coordinates of the center of the search.
+        radius (Quantity): Radius of the search.
+
+    Returns:
+        Table: Table of the catalog.
+
+    """
+    try:
+        guide = Vizier(catalog=catalog_name).query_region(coord, radius=radius)[0]
+    except:
+        print("No catalog found. Setting 2MASS catalog.")
+        guide = get_2mass_catalog(coord, radius)
+
+    return guide
+
 def get_2mass_catalog(coord, radius=1.0*u.arcmin):
     """ Query 2MASS Catalog
     
