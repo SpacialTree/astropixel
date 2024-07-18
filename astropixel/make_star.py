@@ -27,8 +27,8 @@ class GaussianCrossPSF:
             np.ndarray: A 2D numpy array representing the star
         
         """
-        x = np.linspace(0, size[0]-1, size[1])
-        y = np.linspace(0, size[0]-1, size[1])
+        x = np.linspace(0, size[0]-1, size[0])
+        y = np.linspace(0, size[1]-1, size[1])
         x, y = np.meshgrid(x, y)
         
         # Calculate the Gaussian
@@ -60,7 +60,7 @@ class GaussianCrossPSF:
 
         """
 
-        combined_psf = np.zeros((size[0], size[1]))
+        combined_psf = np.zeros((size[1], size[0]))
         
         for (x_center, y_center, stddev, background_factor) in centers_stddevs:
             psf_cross = self.generate_cross_psf(x_center, y_center, stddev, background_factor, size=size)
@@ -76,7 +76,7 @@ class GaussianCrossPSF:
 # Example:
 def main():
     psf = GaussianCrossPSF(amplitude=1)
-    centers_stddevs = [(5.6, 5, 2.5, 0.5), (10, 20, 3, 0.4), (25, 10, 5, 0.4)]
+    centers_stddevs = [(5, 5, 2.5, 0.5), (10, 20, 3, 0.4), (25, 10, 5, 0.4)]
     psf.plot_multiple_cross_psfs(centers_stddevs, size=(100, 67))
 
 if __name__ == '__main__':
