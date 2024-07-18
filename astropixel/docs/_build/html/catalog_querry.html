@@ -50,6 +50,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#catalog_querry.get_2mass_catalog"><code class="docutils literal notranslate"><span class="pre">get_2mass_catalog()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#catalog_querry.get_random_coordinates"><code class="docutils literal notranslate"><span class="pre">get_random_coordinates()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#catalog_querry.get_random_coordinates_gal"><code class="docutils literal notranslate"><span class="pre">get_random_coordinates_gal()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#catalog_querry.get_sdss_catalog"><code class="docutils literal notranslate"><span class="pre">get_sdss_catalog()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -128,6 +129,27 @@
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>SkyCoord</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catalog_querry.get_sdss_catalog">
+<span class="sig-prename descclassname"><span class="pre">catalog_querry.</span></span><span class="sig-name descname"><span class="pre">get_sdss_catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius=&lt;Quantity</span> <span class="pre">1.</span> <span class="pre">arcmin&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catalog_querry.get_sdss_catalog" title="Permalink to this definition"></a></dt>
+<dd><p>Query SDSS Catalog</p>
+<p>Function to get SDSS catalog at a given coordinate and radius using Vizier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coord</strong> (<em>SkyCoord</em>) – Coordinates of the center of the search.</p></li>
+<li><p><strong>radius</strong> (<em>Quantity</em>) – Radius of the search.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Table of the SDSS catalog.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Table</p>
 </dd>
 </dl>
 </dd></dl>
