@@ -11,9 +11,9 @@ import catalog_querry
 import make_star
 
 
-class StarPlotter:
+class StarPlotter(object):
     """ 
-    Class to plot stars
+    Object for plotting stars
     """
 
     def __init__(self, coord, size=(1000, 1000), radius=1*u.arcmin, catalog_name='2MASS'):
