@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-class GaussianCrossPSF:
+class GaussianCrossPSF(object):
     def __init__(self, amplitude=1):
         """Initialize the GaussianCrossPSF class
 
