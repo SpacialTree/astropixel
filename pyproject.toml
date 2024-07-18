@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "astropixel"
-version = "0.2.0"
+version = "1.0.0"
 description = "Astropixel project"
 authors = [
     {name = "Savannah Gramze", email = "savannahgramze@ufl.edu"}, 
