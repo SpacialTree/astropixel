@@ -4,7 +4,7 @@ from astroquery.vizier import Vizier
 import numpy as np
 import matplotlib.pyplot as plt
 
-def get_catalog(catalog_name, coord, radius=1.0*u.arcmin):
+def get_catalog(catalog_name, coord, radius=1.0*u.arcmin, max_star=30):
     """ Get Catalog
     
     Function to get catalog at a given coordinate and radius using Vizier.
@@ -24,14 +24,14 @@ def get_catalog(catalog_name, coord, radius=1.0*u.arcmin):
         print("No catalog found. Setting 2MASS catalog.")
         guide = get_2mass_catalog(coord, radius)
 
-    if len(guide) > 15:
+    if len(guide) > max_star:
         for c in guide.colnames:
             if 'mag' in c:
                 guide = guide[~np.isnan(np.array(guide[c]))]
-        if len(guide) <= 15:
+        if len(guide) <= max_star:
             return guide
         else:
-            guide = guide[0:15]
+            guide = guide[0:max_star]
 
     return guide
 
