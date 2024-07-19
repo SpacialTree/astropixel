@@ -6,7 +6,7 @@ build:
     python: "3.12"
 
 sphinx:
-  configuration: astropixel/docs/source/conf.py
+  configuration: astropixel/docs/conf.py
 
 #python:
 #  version: 3.12
