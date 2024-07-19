@@ -8,8 +8,8 @@ build:
 sphinx:
   configuration: astropixel/docs/source/conf.py
 
-python:
-  version: 3.12
+#python:
+#  version: 3.12
 #  install:
 #    - requirements: astropixel/docs/requirements.txt
 
