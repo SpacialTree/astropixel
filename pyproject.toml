@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "AstroPixel"
-version = "1.0.1"
+version = "1.0.2"
 description = "AstroPixel project made for CodeAstro!"
 readme = "README.md"
 license = {text = "MIT License"}
