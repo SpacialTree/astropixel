@@ -1,4 +1,4 @@
-.. _plot_stars :
+.. _plot_stars:
 
 Plot Stars Functions
 =====================
