@@ -3,13 +3,18 @@ requires = ["setuptools >= 61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "astropixel"
-version = "1.0.0"
-description = "Astropixel project"
+name = "AstroPixel"
+version = "1.0.1"
+dynamic = ["version"]
+description = "AstroPixel project made for CodeAstro!"
+readme = "README.md"
+license = {text = "MIT License"}
 authors = [
     {name = "Savannah Gramze", email = "savannahgramze@ufl.edu"}, 
     {name = "S M Rafee Adnan", email = "smrafee.adnan@louisville.edu"},
     ]
+keywords = ["codeastro", "astropixel", "pixel art", "pixelart", "astronomy", "star map"]
+
 
 dependencies = [
     "astropy >= 4.3.0",
