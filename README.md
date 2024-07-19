@@ -19,7 +19,7 @@ pip install astropixel
 
 This package developed by:
 
-- Savannah Gramze (`@SpacialTree <https://github.com/SpacialTree>`__)
-- S M Rafee Adnan (`@rafee-adnan <https://github.com/rafee-adnan>`__)
+- Savannah Gramze (`@SpacialTree <https://github.com/SpacialTree>`)
+- S M Rafee Adnan (`@rafee-adnan <https://github.com/rafee-adnan>`)
 
 ![Pixelart of the star field around Barnard's Star](notebooks/barnardstar.png "AstroPixel Barnard's Star")
