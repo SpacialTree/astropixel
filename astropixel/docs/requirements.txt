@@ -1,7 +1,4 @@
-astropy
-numpy
-matplotlib
-spectral-cube
-regions
-astroquery
-pytest
+nbsphinx
+pandoc
+ipykernel
+sphinx_rtd_theme
