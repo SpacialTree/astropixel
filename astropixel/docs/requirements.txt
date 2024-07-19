@@ -1,0 +1,7 @@
+astropy
+numpy
+matplotlib
+spectral-cube
+regions
+astroquery
+pytest
