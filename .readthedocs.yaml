@@ -12,8 +12,4 @@ python:
   version: 3.12
   install:
     - requirements: astropixel/docs/requirements.txt
-  system_packages:
-    - libatlas-base-dev
-    - libopenblas-dev
 
-formats: all
